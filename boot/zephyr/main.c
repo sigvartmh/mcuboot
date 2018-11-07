@@ -40,7 +40,7 @@ const struct boot_uart_funcs boot_funcs = {
 };
 #endif
 
-void os_heap_init(void);
+extern void os_heap_init(void);
 
 #if defined(CONFIG_ARM)
 struct arm_vector_table {
@@ -110,8 +110,7 @@ void main(void)
 
     if (!flash_device_get_binding(FLASH_DEV_NAME)) {
         BOOT_LOG_ERR("Flash device %s not found", FLASH_DEV_NAME);
-        while (1)
-            ;
+        while (1);
     }
 
 #ifdef CONFIG_MCUBOOT_SERIAL
@@ -142,8 +141,7 @@ void main(void)
     rc = boot_go(&rsp);
     if (rc != 0) {
         BOOT_LOG_ERR("Unable to find bootable image");
-        while (1)
-            ;
+        while (1);
     }
 
     BOOT_LOG_INF("Bootloader chainload address offset: 0x%x",
@@ -153,6 +151,5 @@ void main(void)
     do_boot(&rsp);
 
     BOOT_LOG_ERR("Never should get here");
-    while (1)
-        ;
+    while (1);
 }
